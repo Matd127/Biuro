@@ -1,0 +1,36 @@
+﻿@model Biuro_Podrozy.Models.BiuroItem
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container-fluid m-3">
+    <h2>Edytuj ofertę</h2>
+    <form method="post" asp-action="Edit" asp-controller="Biuro">
+        <input asp-for="Id" />
+        <div class="mb-3">
+            <span asp-validation-for="TravelPlace" class="text-danger"></span>
+            <input class="form-control" asp-for="TravelPlace" />
+        </div>
+
+        <div class="mb-3">
+            <span asp-validation-for="Price" class="text-danger"></span>
+            <textarea class="form-control" asp-for="Price"></textarea>
+
+        </div>
+
+        <div class="mb-3">
+            <span asp-validation-for="Seats" class="text-danger"></span>
+            <textarea class="form-control" asp-for="Seats"></textarea>
+
+        </div>
+
+        <div class="mb-3">
+            <span asp-validation-for="TravelDate" class="text-danger"></span>
+            <textarea class="form-control" asp-for="TravelDate"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+    </form>
+</div>
