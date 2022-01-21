@@ -1,6 +1,9 @@
 ﻿using Biuro_Podrozy.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +11,9 @@ using System.Threading.Tasks;
 
 namespace Biuro_Podrozy.Controllers
 {
+    [ApiController]
     [Route("api/travels")]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public class ApiBiuroController : Controller
     {
         private ICrudDataRepository travels;
@@ -23,8 +28,11 @@ namespace Biuro_Podrozy.Controllers
             return travels.FindAll().ToList();
         }
 
+        //TUTAJ EXCEPTION
+
         [HttpGet]
         [Route("{id}")]
+        [MyException]
         public ActionResult GetOne(int id)
         {
             BiuroItem biuroItem = travels.Find(id);
@@ -32,8 +40,8 @@ namespace Biuro_Podrozy.Controllers
             if (biuroItem != null)
                 return new OkObjectResult(biuroItem);
             else
-                return NotFound();
-            
+                throw new MyException("Brak identyfikatora zasobu!");
+
         }
         [HttpPost]
         public ActionResult Add([FromBody] BiuroItem travel)
@@ -76,4 +84,24 @@ namespace Biuro_Podrozy.Controllers
             }
         }
     }
-}
+
+    public class MyException : Exception
+    {
+        public MyException(string? message) : base(message)
+        {
+
+        }
+    }
+
+    public class MyExceptionAttribute : ExceptionFilterAttribute
+    {
+        public override void OnException(ExceptionContext context)
+        {
+            var body = new Dictionary<string, Object>();
+            body["error"] = context.Exception.Message;
+            context.Result = new BadRequestObjectResult(body);
+            //base.OnException(context);
+        }
+    }
+
+

@@ -40,7 +40,7 @@ namespace Biuro_Podrozy.Controllers
             { 
                 IdentityUser user = await _userManager.FindByNameAsync(loginModel.Name); 
                 if (user != null) 
-                { 
+                {                  
                     await _signInManager.SignOutAsync(); 
                     if ((await _signInManager.PasswordSignInAsync(user, loginModel.Password, false, false)).Succeeded)
                     {
