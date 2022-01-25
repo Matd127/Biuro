@@ -6,7 +6,20 @@
     ViewBag.Title = "Panel Użytkownika";
 }
 
-Witaj! 
+Witaj! Twoje narzędzia:<br/>
+
+<h2>Podróże</h2>
+<a class="btn btn-primary" asp-action="AddForm" asp-controller="Biuro">Dodaj ofertę</a>
+<a class="btn btn-primary" asp-action="BiuroListAdmin" asp-controller="Biuro">Zarządzaj biurem</a>
+
+<h2>Wyloty</h2>
+
+
+<h2>Zdjęcia</h2>
+
+
+
+<br /><br />
 <form asp-action="Logout" asp-controller="Account" method="post">
     <button class="btn btn-primary" type="submit">Wyloguj Się</button>
 </form>

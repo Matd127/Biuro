@@ -19,8 +19,9 @@ namespace Biuro_Podrozy.Models
         public decimal Price { get; set; }
         public int Seats { get; set; }
         public DateTime TravelDate { get; set; }
-
-        public ICollection<DepartureCity> DepartureCities { get; set; }
+        
+        public Photo Photos { get; set; }
+        public ICollection<DepartureCity> DepartureCities { get; set;}
     }
 
     

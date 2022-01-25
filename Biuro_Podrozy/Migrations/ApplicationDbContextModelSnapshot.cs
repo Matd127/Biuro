@@ -41,6 +41,9 @@ namespace Biuro_Podrozy.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("PhotosPhotoId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -54,6 +57,8 @@ namespace Biuro_Podrozy.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PhotosPhotoId");
 
                     b.ToTable("Data");
                 });
@@ -73,6 +78,21 @@ namespace Biuro_Podrozy.Migrations
                     b.ToTable("Dc");
                 });
 
+            modelBuilder.Entity("Biuro_Podrozy.Models.Photo", b =>
+                {
+                    b.Property<int>("PhotoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("PhotoName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PhotoId");
+
+                    b.ToTable("Ph");
+                });
+
             modelBuilder.Entity("BiuroItemDepartureCity", b =>
                 {
                     b.HasOne("Biuro_Podrozy.Models.BiuroItem", null)
@@ -86,6 +106,20 @@ namespace Biuro_Podrozy.Migrations
                         .HasForeignKey("DepartureCitiesDepartureCityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Biuro_Podrozy.Models.BiuroItem", b =>
+                {
+                    b.HasOne("Biuro_Podrozy.Models.Photo", "Photos")
+                        .WithMany("BiuroItems")
+                        .HasForeignKey("PhotosPhotoId");
+
+                    b.Navigation("Photos");
+                });
+
+            modelBuilder.Entity("Biuro_Podrozy.Models.Photo", b =>
+                {
+                    b.Navigation("BiuroItems");
                 });
 #pragma warning restore 612, 618
         }

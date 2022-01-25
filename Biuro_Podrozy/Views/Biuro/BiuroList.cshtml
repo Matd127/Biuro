@@ -5,72 +5,36 @@
 @{
 }
 
-<h1>Lista wpisów</h1>
-@*<table class="table table-striped">
-    <tr>
-        <th scope="col">Kraj:</th>
-        <th scope="col">Cena: </th>
-        <th scope="col">Miejsca:</th>
-        <th scope="col">Data:</th>
-        <th scope="col">Miasto wylotu:</th>
-        <th scope="col">Operacje:</th>
-    </tr>
-    @foreach (var item in @Model)
-    {
-        <tr>
-            <td>@item.TravelPlace</td>
-            <td>@item.Price</td>
-            <td>@item.Seats</td>
-            <td>@item.TravelDate</td>
-            <td>
-                @foreach (var x in @item.DepartureCities)
-                {
-                    <span>@x.CityName</span>
-                }
-            </td>
-            <td>
-                <a asp-controller="Biuro"
-                   asp-action="Edit"
-                   asp-route-id="@item.Id"
-                   class="btn btn-primary">Edytuj</a>
-                <a asp-controller="Biuro"
-                   asp-action="Delete"
-                   asp-route-id="@item.Id"
-                   class="btn btn-danger">Usuń</a>
-                <a asp-controller="Biuro"
-                   asp-action="Details"
-                   asp-route-id="@item.Id"
-                   class="btn btn-secondary">Szczegóły</a>
-            </td>
-        </tr>
-
-    }
-</table>*@
+<h1>Dostępne podróże</h1>
 
 
 @foreach (var item in @Model)
 {
     <div class="card mb-2 d-flex">
         <div class="row g-0">
-            <div class="col-md-4" >
-                <img src="..." class="img-fluid rounded-start" alt="...">
-            </div>
             <div class="col-md-4">
+                <img src="../img/@item.Photos.PhotoName" class="img-fluid rounded-start h-100" alt="@item.Photos.PhotoName">
+            </div>
+            <div class="col-md-5">
                 <div class="card-body">
                     <h5 class="card-title">@item.TravelPlace</h5>
                     <p class="card-text"><b>Data i godzina wylotu:</b> @item.TravelDate</p>
                     <p class="card-text"><b>Miejsca:</b> @item.Seats</p>
-                    <p class="card-text"><small class="text-muted">
-                        Wylot z:
-                        @foreach (var x in @item.DepartureCities)
-                         {
-                            <span>@x.CityName </span>
-                         }
-                    </small></p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            Wylot z:
+                            @foreach (var x in @item.DepartureCities)
+                            {
+                                <span>@x.CityName</span>
+                            }
+                        </small>
+                    </p>
                     <p class="card-text"><b>Cena:</b> @item.Price/os</p>
                 </div>
-                <div class="col-md-4">
-                    <a class="btn btn-primary">Zarezerwuj</a>
+                <div class="col-md-3">
+                    <a class="btn btn-primary" asp-action="BookInfo" asp-controller="Biuro" asp-route-id="@item.Id">
+                        Zarezerwuj
+                    </a>
                 </div>
                 <p></p>
             </div>

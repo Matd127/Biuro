@@ -22,10 +22,36 @@ namespace Biuro_Podrozy.Controllers
         }
 
         //Strony dla wszystkich
+        public IActionResult Logowanie()
+        {
+            return View();
+        }
 
         public IActionResult BiuroList()
         {
-            return View("BiuroList", repository.Data.Include(b => b.DepartureCities).ToList());
+            var repo = repository.Data
+                .Include(b => b.DepartureCities)
+                .Include(C => C.Photos)
+                .ToList();
+            return View("BiuroList", repo);
+        }
+
+        public IActionResult BiuroListAdmin()
+        {
+            var repo = repository.Data
+                .Include(b => b.DepartureCities)
+                .Include(C => C.Photos)
+                .ToList();
+            return View("BiuroListAdmin", repo);
+        }
+        public int number;
+        public IActionResult BookInfo(int id)
+        {
+            BiuroItem item = rep.Find(id);
+            int number = item.Seats;
+            this.number = number;
+
+            return View("BookInfo", item);
         }
 
         //Strony dla adminów
@@ -35,10 +61,6 @@ namespace Biuro_Podrozy.Controllers
             return View();
         }
 
-        public IActionResult Logowanie()
-        {
-            return View();
-        }
 
         [Authorize]
         public IActionResult AddForm()

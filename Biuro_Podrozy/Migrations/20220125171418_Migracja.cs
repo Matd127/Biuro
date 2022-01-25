@@ -8,33 +8,53 @@ namespace Biuro_Podrozy.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Dc",
+                columns: table => new
+                {
+                    DepartureCityId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CityName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dc", x => x.DepartureCityId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ph",
+                columns: table => new
+                {
+                    PhotoId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PhotoName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ph", x => x.PhotoId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Data",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                   TravelPlace = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                   Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TravelPlace = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Seats = table.Column<int>(type: "int", nullable: false),
-                    TravelDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-               },
-               constraints: table =>
+                    TravelDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PhotosPhotoId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
                 {
                     table.PrimaryKey("PK_Data", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Data_Ph_PhotosPhotoId",
+                        column: x => x.PhotosPhotoId,
+                        principalTable: "Ph",
+                        principalColumn: "PhotoId",
+                        onDelete: ReferentialAction.Restrict);
                 });
-
-           migrationBuilder.CreateTable(
-                name: "Dc",
-               columns: table => new
-                {
-                   DepartureCityId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                  CityName = table.Column<string>(type: "nvarchar(max)", nullable: true)
-               },
-               constraints: table =>
-              {
-                    table.PrimaryKey("PK_Dc", x => x.DepartureCityId);
-              });
 
             migrationBuilder.CreateTable(
                 name: "BiuroItemDepartureCity",
@@ -64,6 +84,11 @@ namespace Biuro_Podrozy.Migrations
                 name: "IX_BiuroItemDepartureCity_DepartureCitiesDepartureCityId",
                 table: "BiuroItemDepartureCity",
                 column: "DepartureCitiesDepartureCityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Data_PhotosPhotoId",
+                table: "Data",
+                column: "PhotosPhotoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -76,6 +101,9 @@ namespace Biuro_Podrozy.Migrations
 
             migrationBuilder.DropTable(
                 name: "Dc");
+
+            migrationBuilder.DropTable(
+                name: "Ph");
         }
     }
 }
