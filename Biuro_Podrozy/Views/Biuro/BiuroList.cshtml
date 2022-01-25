@@ -1,4 +1,4 @@
-﻿@model IQueryable<Biuro_Podrozy.Models.BiuroItem>
+﻿@model List<Biuro_Podrozy.Models.BiuroItem>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -6,15 +6,15 @@
 }
 
 <h1>Lista wpisów</h1>
-<table class="table table-striped">
+@*<table class="table table-striped">
     <tr>
         <th scope="col">Kraj:</th>
         <th scope="col">Cena: </th>
         <th scope="col">Miejsca:</th>
         <th scope="col">Data:</th>
+        <th scope="col">Miasto wylotu:</th>
         <th scope="col">Operacje:</th>
     </tr>
-
     @foreach (var item in @Model)
     {
         <tr>
@@ -22,6 +22,12 @@
             <td>@item.Price</td>
             <td>@item.Seats</td>
             <td>@item.TravelDate</td>
+            <td>
+                @foreach (var x in @item.DepartureCities)
+                {
+                    <span>@x.CityName</span>
+                }
+            </td>
             <td>
                 <a asp-controller="Biuro"
                    asp-action="Edit"
@@ -39,5 +45,35 @@
         </tr>
 
     }
+</table>*@
 
-</table>
+
+@foreach (var item in @Model)
+{
+    <div class="card mb-2 d-flex">
+        <div class="row g-0">
+            <div class="col-md-4" >
+                <img src="..." class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-4">
+                <div class="card-body">
+                    <h5 class="card-title">@item.TravelPlace</h5>
+                    <p class="card-text"><b>Data i godzina wylotu:</b> @item.TravelDate</p>
+                    <p class="card-text"><b>Miejsca:</b> @item.Seats</p>
+                    <p class="card-text"><small class="text-muted">
+                        Wylot z:
+                        @foreach (var x in @item.DepartureCities)
+                         {
+                            <span>@x.CityName </span>
+                         }
+                    </small></p>
+                    <p class="card-text"><b>Cena:</b> @item.Price/os</p>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-primary">Zarezerwuj</a>
+                </div>
+                <p></p>
+            </div>
+        </div>
+    </div>
+}

@@ -65,7 +65,7 @@ namespace Biuro_Podrozy
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Biuro}/{action=BiuroList}/{id?}");
 
             });
             IdentitySeedData.EnsurePopulated(app);

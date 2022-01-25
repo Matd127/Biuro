@@ -1,23 +1,40 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Biuro_Podrozy.Migrations
 {
-    public partial class migracja2 : Migration
+    public partial class Migracja : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Dc",
+                name: "Data",
                 columns: table => new
                 {
-                    DepartureCityId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CityName = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
+                   TravelPlace = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Seats = table.Column<int>(type: "int", nullable: false),
+                    TravelDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+               },
+               constraints: table =>
                 {
-                    table.PrimaryKey("PK_Dc", x => x.DepartureCityId);
+                    table.PrimaryKey("PK_Data", x => x.Id);
                 });
+
+           migrationBuilder.CreateTable(
+                name: "Dc",
+               columns: table => new
+                {
+                   DepartureCityId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                  CityName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+               },
+               constraints: table =>
+              {
+                    table.PrimaryKey("PK_Dc", x => x.DepartureCityId);
+              });
 
             migrationBuilder.CreateTable(
                 name: "BiuroItemDepartureCity",
@@ -53,6 +70,9 @@ namespace Biuro_Podrozy.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BiuroItemDepartureCity");
+
+            migrationBuilder.DropTable(
+                name: "Data");
 
             migrationBuilder.DropTable(
                 name: "Dc");

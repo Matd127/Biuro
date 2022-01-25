@@ -1,6 +1,7 @@
 ﻿using Biuro_Podrozy.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,25 @@ namespace Biuro_Podrozy.Controllers
 {
     public class BiuroController : Controller
     {
-        //Strony
+        //Repo
+
+        public IDataRepository repository;
+        public ICrudDataRepository rep;
+        public BiuroController(IDataRepository repository, ICrudDataRepository rep)
+        {
+            this.repository = repository;
+            this.rep = rep;
+        }
+
+        //Strony dla wszystkich
+
+        public IActionResult BiuroList()
+        {
+            return View("BiuroList", repository.Data.Include(b => b.DepartureCities).ToList());
+        }
+
+        //Strony dla adminów
+        [Authorize]
         public IActionResult Index()
         {
             return View();
@@ -33,26 +52,11 @@ namespace Biuro_Podrozy.Controllers
             return View();
         }
 
-        public IActionResult BiuroList()
-        {
-            return View("BiuroList", repository.Data);
-        }
-
         [Authorize]
         public IActionResult Edit(int id)
         {
             BiuroItem editedItem = rep.Find(id);
             return View("EditForm", editedItem);
-        }
-
-        //Repo
-
-        public IDataRepository repository;
-        public ICrudDataRepository rep;
-        public BiuroController(IDataRepository repository, ICrudDataRepository rep)
-        {
-            this.repository = repository;
-            this.rep = rep;
         }
 
         //Akcje
