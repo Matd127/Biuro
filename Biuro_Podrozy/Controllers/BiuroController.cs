@@ -15,8 +15,10 @@ namespace Biuro_Podrozy.Controllers
 
         public IDataRepository repository;
         public ICrudDataRepository rep;
-        public BiuroController(IDataRepository repository, ICrudDataRepository rep)
+        public ICrudBookRepository repbook;
+        public BiuroController(IDataRepository repository, ICrudDataRepository rep, ICrudBookRepository repbook)
         {
+            this.repbook = repbook;
             this.repository = repository;
             this.rep = rep;
         }
@@ -32,6 +34,7 @@ namespace Biuro_Podrozy.Controllers
             var repo = repository.Data
                 .Include(b => b.DepartureCities)
                 .Include(C => C.Photos)
+                .Include(z => z.Books)
                 .ToList();
             return View("BiuroList", repo);
         }
@@ -41,17 +44,41 @@ namespace Biuro_Podrozy.Controllers
             var repo = repository.Data
                 .Include(b => b.DepartureCities)
                 .Include(C => C.Photos)
+                .Include(z => z.Books)
                 .ToList();
             return View("BiuroListAdmin", repo);
         }
-        public int number;
         public IActionResult BookInfo(int id)
         {
             BiuroItem item = rep.Find(id);
-            int number = item.Seats;
-            this.number = number;
-
             return View("BookInfo", item);
+        }
+
+        public IActionResult BookForm()
+        {
+            return View("BookForm");
+        }
+
+
+        //Rezerwacja biletu
+        [HttpPost]
+        public IActionResult BookF(Book model)
+        {
+            if(ModelState.IsValid)
+            {
+                model = repbook.Save(model);
+                return View("BookSuccess", model);
+            }    
+            else
+                return View("BookForm");
+        }
+
+
+
+
+        public IActionResult BookSuccess()
+        {
+            return View();
         }
 
         //Strony dla adminów

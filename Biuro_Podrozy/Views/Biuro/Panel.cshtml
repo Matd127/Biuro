@@ -6,20 +6,30 @@
     ViewBag.Title = "Panel Użytkownika";
 }
 
-Witaj! Twoje narzędzia:<br/>
+Witaj! Twoje narzędzia:
+<br />
 
-<h2>Podróże</h2>
-<a class="btn btn-primary" asp-action="AddForm" asp-controller="Biuro">Dodaj ofertę</a>
-<a class="btn btn-primary" asp-action="BiuroListAdmin" asp-controller="Biuro">Zarządzaj biurem</a>
+<div class="m-2">
+    <h2>Podróże</h2>
+    <a class="btn btn-primary" asp-action="AddForm" asp-controller="Biuro">Dodaj ofertę</a>
+    <a class="btn btn-primary" asp-action="BiuroListAdmin" asp-controller="Biuro">Zarządzaj biurem</a>
+</div>
 
-<h2>Wyloty</h2>
+<div>
+    <h2>Wyloty</h2>
+    <a class="btn btn-primary" asp-action="AddForm" asp-controller="Biuro">Dodaj miasto</a>
+    <a class="btn btn-primary" asp-action="BiuroListAdmin" asp-controller="Biuro">Zarządzaj miastami</a>
+</div>
 
+<div>
+    <h2>Zdjęcia</h2>
+    <a class="btn btn-primary" asp-action="AddForm" asp-controller="Biuro">Dodaj zdjęcie</a>
+    <a class="btn btn-primary" asp-action="BiuroListAdmin" asp-controller="Biuro">Zarządzaj zdjęciami</a>
 
-<h2>Zdjęcia</h2>
+</div>
 
-
-
-<br /><br />
+<br />
+<br />
 <form asp-action="Logout" asp-controller="Account" method="post">
     <button class="btn btn-primary" type="submit">Wyloguj Się</button>
 </form>

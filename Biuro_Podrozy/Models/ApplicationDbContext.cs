@@ -29,11 +29,20 @@ namespace Biuro_Podrozy.Models
                 .HasMany<BiuroItem>(p => p.BiuroItems)
                 .WithOne(b => b.Photos);
 
+            modelBuilder.Entity<Book>()
+                .HasOne<BiuroItem>(b => b.BiuroItem)
+                .WithMany(c => c.Books);
+
+            modelBuilder.Entity<BiuroItem>()
+                .HasMany<Book>(b => b.Books)
+                .WithOne(c => c.BiuroItem);
+
         }
 
         public DbSet<BiuroItem> Data { get; set; }
         public DbSet<DepartureCity> Dc { get; set; }
         public DbSet<Photo> Ph { get; set; }
+        public DbSet<Book> Books { get; set; }
 
     }
 
@@ -48,5 +57,6 @@ namespace Biuro_Podrozy.Models
         public IQueryable<BiuroItem> Data => _applicationDbContext.Data;
         public IQueryable<DepartureCity> Dc => _applicationDbContext.Dc;
         public IQueryable<Photo> Ph => _applicationDbContext.Ph;
+        public IQueryable<Book> Books => _applicationDbContext.Books;
     }
 }

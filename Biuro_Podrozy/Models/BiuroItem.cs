@@ -22,6 +22,7 @@ namespace Biuro_Podrozy.Models
         
         public Photo Photos { get; set; }
         public ICollection<DepartureCity> DepartureCities { get; set;}
+        public ICollection<Book> Books { get; set; }
     }
 
     

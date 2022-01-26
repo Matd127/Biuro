@@ -10,18 +10,13 @@
 <div asp-action="BookInfo">
     <div>
         <h4>Miejsce podróży: @Model.TravelPlace</h4>
-        <h4>Wolne miejsca: @Model.Seats</h4>
     </div>
 </div>
 
 
-
-
 <form method="post" asp-action="BookInfo" asp-controller="Biuro">
-    <input asp-for="Seats" />
     <div class="mb-3">
-    <label>Ile miejsc chcesz zarezerwować?</label>
-        <span asp-validation-for="TravelPlace" class="text-danger"></span>
+        <label>Jeśli jesteś pewny/na swojego wyboru kliknij przycisk Dalej</label>
+        <button type="submit" class="btn btn-primary" asp-action="BookForm">Dalej</button>
     </div>
-    <button type="submit" class="btn btn-primary">Zapisz</button>
 </form>

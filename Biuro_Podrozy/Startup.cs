@@ -33,6 +33,7 @@ namespace Biuro_Podrozy
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["Data2:AppIdentity:ConnectionString"])); services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
             services.AddTransient<IDataRepository, EFPDataRepository>();
             services.AddTransient<ICrudDataRepository, CrudDataRepository>();
+            services.AddTransient<ICrudBookRepository, CrudBookRepository>();
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();
