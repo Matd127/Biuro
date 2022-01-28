@@ -14,7 +14,6 @@
         <th scope="col">Miejsca:</th>
         <th scope="col">Data:</th>
         <th scope="col">Miasto wylotu:</th>
-        <th scope="col">Rezerwki</th>
         <th scope="col">Operacje:</th>
     </tr>
     @foreach (var item in @Model)
@@ -28,12 +27,6 @@
                 @foreach (var x in @item.DepartureCities)
                 {
                     <span>@x.CityName</span>
-                }
-            </td>
-            <td>
-                @foreach(var z in @item.Books)
-                {
-                    <span>@z.First_Name</span>
                 }
             </td>
             <td>

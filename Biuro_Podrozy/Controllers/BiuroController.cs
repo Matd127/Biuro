@@ -42,15 +42,7 @@ namespace Biuro_Podrozy.Controllers
             return View("BiuroList", repo);
         }
 
-        public IActionResult BiuroListAdmin()
-        {
-            var repo = repository.Data
-                .Include(b => b.DepartureCities)
-                .Include(C => C.Photos)
-                .Include(z => z.Books)
-                .ToList();
-            return View("BiuroListAdmin", repo);
-        }
+       
         public IActionResult BookInfo(int id)
         {
             BiuroItem item = rep.Find(id);
@@ -90,13 +82,23 @@ namespace Biuro_Podrozy.Controllers
             return View();
         }
 
-        //Strony dla adminów
+        //Dla Admina
         [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
+        public IActionResult BiuroListAdmin()
+        {
+            var repo = repository.Data
+                .Include(b => b.DepartureCities)
+                .Include(C => C.Photos)
+                .Include(z => z.Books)
+                .ToList();
+            return View("BiuroListAdmin", repo);
+        }
 
         [Authorize]
         public IActionResult AddForm()
@@ -117,6 +119,13 @@ namespace Biuro_Podrozy.Controllers
             return View("EditForm", editedItem);
         }
 
+        [Authorize]
+        public IActionResult DepartureList()
+        {
+            var repo = repository.Dc;
+            return View("DepartureList", repo);
+        }
+
         //Akcje
         [Authorize]
         public IActionResult Add(BiuroItem item)
@@ -132,8 +141,14 @@ namespace Biuro_Podrozy.Controllers
         [Authorize]
         public IActionResult Delete(BiuroItem item)
         {
+            var repo = repository.Data
+                .Include(b => b.DepartureCities)
+                .Include(C => C.Photos)
+                .Include(z => z.Books)
+                .ToList();
+
             rep.Delete(item.Id);
-            return View("BiuroList", repository.Data);
+            return View("BiuroList", repo);
         }
 
         [HttpPost]
@@ -148,7 +163,14 @@ namespace Biuro_Podrozy.Controllers
             originItem.TravelDate = item.TravelDate;
             rep.Update(originItem);
 
-            return View("BiuroList", repository.Data);
+
+            var repo = repository.Data
+                .Include(b => b.DepartureCities)
+                .Include(C => C.Photos)
+                .Include(z => z.Books)
+                .ToList();
+
+            return View("BiuroList", repo);
         }
 
     }
