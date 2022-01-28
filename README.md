@@ -8,7 +8,9 @@ Data: W DATA SOURCE zamieniamy DESKTOP-KURUF8P na nazwę servera  MS SQL
 Data2 W SERVER zamieniamy DESKTOP-KURUF8P  na nazwę servera  MS SQL
 
 Następnie w konsoli menedżera pakietów uruchamiamy:
+
 update-database -verbose -context applicationdbcontext
+
 update-database -verbose -context appidentitydbcontext
 
 Przykładowe dane w sql:
