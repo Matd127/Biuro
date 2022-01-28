@@ -58,5 +58,5 @@ namespace Biuro_Podrozy.Models
         public IQueryable<DepartureCity> Dc => _applicationDbContext.Dc;
         public IQueryable<Photo> Ph => _applicationDbContext.Ph;
         public IQueryable<Book> Books => _applicationDbContext.Books;
-    }
+    } 
 }

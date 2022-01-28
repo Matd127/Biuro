@@ -16,7 +16,10 @@ namespace Biuro_Podrozy.Controllers
         public IDataRepository repository;
         public ICrudDataRepository rep;
         public ICrudBookRepository repbook;
-        public BiuroController(IDataRepository repository, ICrudDataRepository rep, ICrudBookRepository repbook)
+        public BiuroController(
+            IDataRepository repository, 
+            ICrudDataRepository rep, 
+            ICrudBookRepository repbook)
         {
             this.repbook = repbook;
             this.repository = repository;
@@ -54,26 +57,32 @@ namespace Biuro_Podrozy.Controllers
             return View("BookInfo", item);
         }
 
-        public IActionResult BookForm()
+        public IActionResult BookForm(int id)
         {
-            return View("BookForm");
+            BiuroItem item = rep.Find(id);
+            return View("BookForm", item);
         }
 
 
         //Rezerwacja biletu
         [HttpPost]
-        public IActionResult BookF(Book model)
+        public IActionResult BookF(Book model, int id)
         {
-            if(ModelState.IsValid)
+            BiuroItem item = rep.Find(id);
+            var repo = repository.Data
+                .Include(b => b.DepartureCities)
+                .Include(C => C.Photos)
+                .Include(z => z.Books)
+                .ToList();
+
+            if (ModelState.IsValid)
             {
                 model = repbook.Save(model);
                 return View("BookSuccess", model);
             }    
             else
-                return View("BookForm");
+                return View("BookForm", item);
         }
-
-
 
 
         public IActionResult BookSuccess()
