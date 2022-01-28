@@ -22,17 +22,14 @@ namespace Biuro_Podrozy.Models
 
         public Book Delete(int id)
         {
-            throw new NotImplementedException();
+            var item = _context.Books.Remove(Find(id)).Entity;
+            _context.SaveChanges();
+            return item;
         }
 
         public Book Find(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Book> FindAll()
-        {
-            throw new NotImplementedException();
+            return _context.Books.Find(id);
         }
 
         public Book Save(Book item)
@@ -54,6 +51,10 @@ namespace Biuro_Podrozy.Models
             {
                 return null;
             }
+        }
+        public List<Book> FindAll()
+        {
+            return _context.Books.ToList();
         }
     }
 }

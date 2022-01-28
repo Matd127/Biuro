@@ -48,6 +48,8 @@ namespace Biuro_Podrozy.Models
 
         public BiuroItem Save(BiuroItem item)
         {
+
+
             var bitem = _context.Data.Update(item).Entity;
             _context.SaveChanges();
             return bitem;

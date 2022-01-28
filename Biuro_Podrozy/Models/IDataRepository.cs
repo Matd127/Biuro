@@ -10,5 +10,6 @@ namespace Biuro_Podrozy.Models
         IQueryable<BiuroItem> Data { get; }
         IQueryable<DepartureCity> Dc { get; }
         IQueryable<Photo> Ph { get; }
+        IQueryable<Book> Books { get; }
     }
 }

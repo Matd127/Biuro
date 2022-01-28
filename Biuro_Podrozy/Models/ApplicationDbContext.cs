@@ -54,6 +54,7 @@ namespace Biuro_Podrozy.Models
         {
             _applicationDbContext = applicationDbContext;
         }
+
         public IQueryable<BiuroItem> Data => _applicationDbContext.Data;
         public IQueryable<DepartureCity> Dc => _applicationDbContext.Dc;
         public IQueryable<Photo> Ph => _applicationDbContext.Ph;

@@ -126,7 +126,20 @@ namespace Biuro_Podrozy.Controllers
             return View("DepartureList", repo);
         }
 
-        //Akcje
+        [Authorize]
+        public IActionResult PhotoList()
+        {
+            var repo = repository.Ph;
+            return View("PhotoList", repo);
+        }
+
+        public IActionResult BookList()
+        {
+            var repo = repository.Books;
+            return View("BookList", repo);
+        }
+
+        //Akcje - Podróże
         [Authorize]
         public IActionResult Add(BiuroItem item)
         {
@@ -141,14 +154,8 @@ namespace Biuro_Podrozy.Controllers
         [Authorize]
         public IActionResult Delete(BiuroItem item)
         {
-            var repo = repository.Data
-                .Include(b => b.DepartureCities)
-                .Include(C => C.Photos)
-                .Include(z => z.Books)
-                .ToList();
-
             rep.Delete(item.Id);
-            return View("BiuroList", repo);
+            return View("BiuroList");
         }
 
         [HttpPost]
@@ -163,7 +170,6 @@ namespace Biuro_Podrozy.Controllers
             originItem.TravelDate = item.TravelDate;
             rep.Update(originItem);
 
-
             var repo = repository.Data
                 .Include(b => b.DepartureCities)
                 .Include(C => C.Photos)
@@ -172,6 +178,19 @@ namespace Biuro_Podrozy.Controllers
 
             return View("BiuroList", repo);
         }
+
+        [Authorize]
+        public IActionResult DeleteBook(Book item)
+        {
+            rep.Delete(item.BookId);
+            return View("BookList");
+        }
+
+        //Akcje - wyloty
+
+        //Akcje Zajęcia
+
+        //Akcje - rezerwacje
 
     }
 }
